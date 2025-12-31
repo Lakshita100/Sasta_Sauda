@@ -31,7 +31,7 @@ export function Header() {
           </div>
           <div>
             <h1 className="font-serif text-xl font-bold text-foreground">SastaSauda</h1>
-            <p className="text-xs text-muted-foreground">AI-Verified Trading</p>
+            <p className="text-xs text-muted-foreground">Jaha Sasta Waha Sauda</p>
           </div>
         </div>
 
@@ -40,7 +40,7 @@ export function Header() {
             <Button 
               variant={isActive('/market') ? 'secondary' : 'ghost'} 
               size="sm"
-              onClick={() => navigate('/market')}
+              onClick={() => navigate('/market-prices')}
             >
               Market Prices
             </Button>
@@ -58,7 +58,7 @@ export function Header() {
               size="sm"
               onClick={() => navigate('/marketplace')}
             >
-              Marketplace
+              Buy Grains
             </Button>
             {userRole === 'buyer' && (
               <Button 
