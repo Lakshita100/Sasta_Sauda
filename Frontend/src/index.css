@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+
+@layer base {
+  :root {
+    /* SastaSauda Design System - Calm, Professional, Trust-Focused */
+    
+    /* Primary: Deep Forest Green - Trust & Agriculture */
+    --primary: 152 45% 28%;
+    --primary-foreground: 45 30% 96%;
+    
+    /* Background: Warm Cream */
+    --background: 45 30% 98%;
+    --foreground: 220 20% 15%;
+    
+    /* Cards: Clean White */
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+    
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+    
+    /* Secondary: Soft Sage */
+    --secondary: 150 20% 94%;
+    --secondary-foreground: 152 45% 25%;
+    
+    /* Muted: Neutral Gray */
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 10% 45%;
+    
+    /* Accent: Warm Gold */
+    --accent: 42 90% 55%;
+    --accent-foreground: 220 20% 15%;
+    
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders & Inputs */
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 152 45% 28%;
+    
+    /* Radius */
+    --radius: 0.75rem;
+    
+    /* Quality Grades */
+    --grade-a: 152 60% 40%;
+    --grade-b: 38 92% 50%;
+    --grade-c: 0 72% 51%;
+    
+    /* Trust Score */
+    --trust-high: 152 60% 40%;
+    --trust-medium: 38 92% 50%;
+    --trust-low: 0 72% 51%;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 15% 15% / 0.03);
+    --shadow-md: 0 4px 6px -1px hsl(220 15% 15% / 0.05), 0 2px 4px -2px hsl(220 15% 15% / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(220 15% 15% / 0.08), 0 4px 6px -4px hsl(220 15% 15% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(220 15% 15% / 0.08), 0 8px 10px -6px hsl(220 15% 15% / 0.05);
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 20% 15%;
+    --sidebar-primary: 152 45% 28%;
+    --sidebar-primary-foreground: 45 30% 96%;
+    --sidebar-accent: 150 20% 94%;
+    --sidebar-accent-foreground: 152 45% 25%;
+    --sidebar-border: 220 15% 90%;
+    --sidebar-ring: 152 45% 28%;
+  }
+
+  .dark {
+    --primary: 152 45% 50%;
+    --primary-foreground: 220 20% 10%;
+    
+    --background: 220 20% 8%;
+    --foreground: 45 30% 96%;
+    
+    --card: 220 20% 12%;
+    --card-foreground: 45 30% 96%;
+    
+    --popover: 220 20% 12%;
+    --popover-foreground: 45 30% 96%;
+    
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 45 30% 96%;
+    
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 10% 60%;
+    
+    --accent: 42 90% 55%;
+    --accent-foreground: 220 20% 10%;
+    
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 152 45% 50%;
+    
+    --sidebar-background: 220 20% 10%;
+    --sidebar-foreground: 45 30% 96%;
+    --sidebar-primary: 152 45% 50%;
+    --sidebar-primary-foreground: 220 20% 10%;
+    --sidebar-accent: 220 15% 18%;
+    --sidebar-accent-foreground: 45 30% 96%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 152 45% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces', serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+  
+  .animate-pulse-soft {
+    animation: pulseSoft 2s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
