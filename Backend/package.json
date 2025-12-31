@@ -12,10 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@azure/storage-blob": "^12.29.1",
->>>>>>> 6dda17ad86ff2f5ff6777b0e5b975e5a8b084ed5
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",

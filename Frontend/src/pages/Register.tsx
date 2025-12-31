@@ -36,10 +36,13 @@ export default function Register() {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userRole', data.role); // ⭐ IMPORTANT
         setUserRole(data.role);
+
         toast.success("Account created successfully!");
         navigate(data.role === 'seller' ? '/seller' : '/marketplace');
-      } else {
+     }
+      else {
         toast.error(data.message || "Registration failed");
       }
     } catch (err) {

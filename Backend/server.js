@@ -3,6 +3,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const connectDB = require('./config/db');
+const listingsRoutes = require("./routes/listings");
+
+
 
 dotenv.config();
 const app = express();
@@ -17,6 +20,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use("/api/listings", listingsRoutes);
+
 
 // Health Check
 app.get('/', (req, res) => res.send('SastaSauda API is running...'));

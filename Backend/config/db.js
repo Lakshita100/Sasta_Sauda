@@ -1,17 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      dbName: 'sastasauda',
-      // Recommended settings for Azure Cosmos DB
-      socketTimeoutMS: 45000,
-      serverSelectionTimeoutMS: 5000,
-      tls: true
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      dbName: "sastasauda",
     });
-    console.log("🚀 Success: Connected to SastaSauda Azure DB");
-  } catch (err) {
-    console.error("❌ Connection failed! Did you whitelist your IP in Azure? Error:", err.message);
+
+    console.log("MongoDB Connected:", conn.connection.host);
+  } catch (error) {
+    console.error("❌ DB connection failed:", error.message);
     process.exit(1);
   }
 };
