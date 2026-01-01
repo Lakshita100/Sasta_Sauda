@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
+import Listing from "../models/Listing.js";
+import upload from "../middleware/upload.js";
+
 const router = express.Router();
-const Listing = require("../models/Listing");
-const upload = require("../middleware/upload");
 
 // CREATE LISTING (SELLER)
 router.post("/", upload.single("image"), async (req, res) => {
@@ -29,4 +30,4 @@ router.get("/", async (req, res) => {
   res.json(listings);
 });
 
-module.exports = router;
+export default router;

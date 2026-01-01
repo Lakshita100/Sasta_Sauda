@@ -1,11 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-const connectDB = require('./config/db');
-const listingsRoutes = require("./routes/listings");
-
-
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import authRoutes from './routes/auth.js';
+import connectDB from './config/db.js';
+import listingsRoutes from "./routes/listings.js";
+import analyzeRoutes from "./routes/analyze.routes.js";
 
 dotenv.config();
 const app = express();
@@ -21,6 +20,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use("/api/listings", listingsRoutes);
+app.use("/api", analyzeRoutes);
 
 
 // Health Check

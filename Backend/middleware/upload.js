@@ -1,9 +1,10 @@
-const multer = require("multer");
+import multer from "multer";
 
-const storage = multer.memoryStorage(); // store in memory (for Azure later)
+const storage = multer.memoryStorage();
 
 const upload = multer({
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5 MB
 });
 
-module.exports = upload;
+export default upload;
