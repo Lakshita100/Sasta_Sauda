@@ -1,78 +1,132 @@
-import { Header } from '@/components/Header';
-import { MarketPriceCard } from '@/components/MarketPriceCard';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { MARKET_PRICES } from '@/data/mockData';
-import { useApp } from '@/context/AppContext';
-import { useNavigate } from 'react-router-dom';
-import { TrendingUp, Shield, Info, ArrowRight, LayoutDashboard } from 'lucide-react';
+import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  ArrowRight,
+  Users,
+  Phone,
+  Mail,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const { userRole, user } = useApp();
   const navigate = useNavigate();
 
-  const handleContinue = () => {
-    // Navigates based on the role stored in Azure/Context
-    if (userRole === 'seller') {
-      navigate('/');
-    } else {
-      navigate('/marketplace');
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100">
       <Header />
-      
-      <main className="container mx-auto px-4 py-8 space-y-8">
-        {/* Welcome Banner */}
-        <div className="bg-primary/10 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 border border-primary/20">
-          <div>
-            <h2 className="text-2xl font-bold">Welcome back, {user?.name || 'User'}!</h2>
-            <p className="text-muted-foreground">You are currently logged in as a <span className="text-primary font-bold capitalize">{userRole}</span></p>
-          </div>
-          <Button onClick={handleContinue} className="gap-2 shrink-0">
-            <LayoutDashboard className="h-4 w-4" />
-            Go to {userRole === 'seller' ? 'Seller Dashboard' : 'Marketplace'}
+
+      {/* GAP BELOW NAVBAR */}
+      <div className="h-10" />
+
+      {/* ================= HERO ================= */}
+      <section className="max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center">
+        <div className="space-y-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-green-800 leading-tight">
+            Buy Raw Matrials   
+            <br />Ai Verified Products.
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            SastaSauda brings transparency to agricultural markets by showing
+            real-time prices and enabling direct trading.
+          </p>
+          <Button
+            size="lg"
+            onClick={() => navigate("/market-prices")}
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 rounded-xl"
+          >
+            View Market Prices
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
 
-        {/* Header Section */}
-        <div className="text-center max-w-2xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm">
-            <TrendingUp className="h-4 w-4" />
-            Live Market Insights
+        <img
+          src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854"
+          alt="Farmer"
+          className="rounded-2xl shadow-lg"
+        />
+      </section>
+
+       {/* GAP BELOW */}
+      <div className="h-10" />
+
+      {/* ================= ABOUT ================= */}
+      <section className="bg-white py-16">
+        <div className="max-w-6xl mx-auto px-4 space-y-6 text-center">
+          <h2 className="text-3xl font-serif font-bold text-green-800">
+            About SastaSauda
+          </h2>
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            SastaSauda is built to eliminate unfair pricing and middlemen
+            exploitation. Farmers can see genuine market prices before selling,
+            and buyers get transparent access to quality produce.
+          </p>
+        </div>
+      </section>
+
+       {/* GAP BELOW */}
+      <div className="h-10" />
+
+      {/* ================= TEAM ================= */}
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4 space-y-8">
+          <h2 className="text-3xl font-serif font-bold text-center text-green-800">
+            Our Team
+          </h2>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {["Anand Dangi", "Mahika Chaurasiya", "Ramkumar Chaurasiya" ,"Lakshita Hingar"].map((name, i) => (
+              <Card key={i} className="text-center bg-white/80">
+                <CardContent className="p-4 space-y-2">
+                  <Users className="mx-auto text-green-600 h-8 w-8" />
+                  <p className="font-semibold">{name}</p>
+                  <p className="text-sm text-muted-foreground">
+                   MEMBER
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl font-bold">Today's Grain Prices</h1>
         </div>
+      </section>
 
-        {/* Price Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-          {MARKET_PRICES.map((price) => (
-            <MarketPriceCard key={price.grainType} price={price} />
-          ))}
-        </div>
+   {/* GAP BELOW */}
+      <div className="h-10" />
 
-        {/* Info & Trust Section */}
-        <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
-          <Card className="bg-primary/5 border-primary/20">
-            <CardContent className="p-4 flex gap-4">
-              <Info className="h-5 w-5 text-primary shrink-0" />
-              <p className="text-sm text-muted-foreground">
-                Prices are updated daily based on national agricultural commodity exchanges.
+      {/* ================= CONTACT ================= */}
+      <section className="bg-green-700 text-green-100 py-16">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">Contact Us</h2>
+            <p className="text-green-200">
+              Reach out for partnerships, support, or feedback.
+            </p>
+            <div className="space-y-2 text-sm">
+              <p className="flex items-center gap-2">
+                <Mail className="h-4 w-4" /> sastasauda86@gmail.com
               </p>
-            </CardContent>
-          </Card>
-          <Card className="bg-accent/5 border-accent/20">
-            <CardContent className="p-4 flex gap-4">
-              <Shield className="h-5 w-5 text-accent-foreground shrink-0" />
-              <p className="text-sm text-muted-foreground">
-                SastaSauda AI ensures quality verification for every transaction.
+              <p className="flex items-center gap-2">
+                <Phone className="h-4 w-4" /> +91 9XXXXXXXXX
               </p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="font-semibold">Follow Us</h3>
+            <div className="flex gap-4">
+              <Linkedin />
+              <Twitter />
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="bg-green-800 text-green-200 text-center py-4 text-sm">
+        © {new Date().getFullYear()} SastaSauda. All rights reserved.
+      </footer>
     </div>
   );
 }

@@ -82,99 +82,125 @@ export default function SellerDashboard() {
     }
   };
 
- return (
+return (
   <>
     {/* Navbar */}
     <Header />
 
-    {/* Page Content */}
-    <div className="max-w-3xl mx-auto py-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Seller Dashboard</CardTitle>
+    {/* Background Overlay */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 px-4">
+      
+      {/* Popup Card */}
+      <Card className="w-full max-w-3xl shadow-2xl rounded-2xl border border-green-100 animate-in fade-in zoom-in duration-300">
+        
+        <CardHeader className="text-center space-y-2 pb-2">
+          <CardTitle className="text-3xl font-bold text-green-700">
+            Seller Dashboard
+          </CardTitle>
           <p className="text-sm text-muted-foreground">
             Upload grain details with image for AI verification
           </p>
         </CardHeader>
 
-        <CardContent className="space-y-4">
-          <div>
-            <Label>Grain Type</Label>
+        <CardContent className="space-y-5 pt-4">
+          
+          {/* Grain Type */}
+          <div className="space-y-1">
+            <Label className="text-sm font-medium">Grain Type</Label>
             <Input
               name="grainType"
               value={form.grainType}
               onChange={handleChange}
               placeholder="Rice / Wheat / Dal"
+              className="focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div>
-            <Label>Location</Label>
+          {/* Location */}
+          <div className="space-y-1">
+            <Label className="text-sm font-medium">Location</Label>
             <Input
               name="location"
               value={form.location}
               onChange={handleChange}
               placeholder="State / District"
+              className="focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label>Quantity (quintals)</Label>
+          {/* Quantity & Price */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <Label className="text-sm font-medium">
+                Quantity (quintals)
+              </Label>
               <Input
                 name="quantity"
                 type="number"
                 value={form.quantity}
                 onChange={handleChange}
+                className="focus:ring-2 focus:ring-green-400"
               />
             </div>
 
-            <div>
-              <Label>Price per Quintal (₹)</Label>
+            <div className="space-y-1">
+              <Label className="text-sm font-medium">
+                Price per Quintal (₹)
+              </Label>
               <Input
                 name="pricePerQuintal"
                 type="number"
                 value={form.pricePerQuintal}
                 onChange={handleChange}
+                className="focus:ring-2 focus:ring-green-400"
               />
             </div>
           </div>
 
-          <div>
-            <Label>Quality Grade</Label>
+          {/* Quality Grade */}
+          <div className="space-y-1">
+            <Label className="text-sm font-medium">Quality Grade</Label>
             <Select
               value={form.qualityGrade}
               onValueChange={(value) =>
                 setForm({ ...form, qualityGrade: value })
               }
             >
-              <SelectTrigger>
-                <SelectValue />
+              <SelectTrigger className="focus:ring-2 focus:ring-green-400">
+                <SelectValue placeholder="Select grade" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="A">Grade A</SelectItem>
+                <SelectItem value="A">Grade A (Best)</SelectItem>
                 <SelectItem value="B">Grade B</SelectItem>
                 <SelectItem value="C">Grade C</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          {/* IMAGE UPLOAD */}
-          <div>
-            <Label>Upload Grain Image</Label>
+          {/* Image Upload */}
+          <div className="space-y-1">
+            <Label className="text-sm font-medium">
+              Upload Grain Image
+            </Label>
             <Input
               type="file"
               accept="image/*"
               onChange={(e) => setImage(e.target.files?.[0] || null)}
+              className="cursor-pointer file:bg-green-100 file:text-green-700 file:border-0 file:px-4 file:py-2 file:rounded-md hover:file:bg-green-200"
             />
           </div>
 
-          <Button className="w-full mt-4" onClick={submitListing}>
-            Submit Listing
+          {/* Submit Button */}
+          <Button
+            className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white text-lg py-6 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.02]"
+            onClick={submitListing}
+          >
+            🚜 Submit Listing
           </Button>
         </CardContent>
       </Card>
     </div>
   </>
 );
+
 }
