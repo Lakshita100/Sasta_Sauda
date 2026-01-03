@@ -3,10 +3,13 @@ import upload from "../middleware/upload.js";
 
 import { uploadToBlob } from "../services/blob.service.js";
 import { runVisionCheck } from "../services/vision.service.js";
+
 import {
   predictGrainType,
-  predictWheatQuality
+  predictWheatQuality,
+  predictRiceQuality
 } from "../services/customVision.service.js";
+
 import { calculateTrustScore } from "../services/trustScore.service.js";
 
 const router = express.Router();
@@ -33,37 +36,44 @@ router.post("/analyze-grain", upload.single("file"), async (req, res) => {
     // -------- 3. Grain Type Prediction (Custom Vision - BUFFER) --------
     const grainResult = await predictGrainType(fileBuffer);
 
-    if (!grainResult.predictions || grainResult.predictions.length === 0) {
+    if (!grainResult?.predictions?.length) {
       return res.status(400).json({ error: "Unable to detect grain type" });
     }
 
     const grainPrediction = grainResult.predictions[0];
     const grainType = grainPrediction.tagName;
 
-    // -------- 4. If not wheat, return early (MVP scope) --------
-    if (grainType !== "wheat") {
+    // -------- 4. Quality Prediction based on grain --------
+    let qualityResult = null;
+
+    if (grainType === "wheat") {
+      qualityResult = await predictWheatQuality(fileBuffer);
+    } 
+    else if (grainType === "rice") {
+      qualityResult = await predictRiceQuality(fileBuffer);
+    } 
+    else {
       return res.json({
         imageUrl,
         grainType,
-        message: "Quality model available only for wheat (MVP)"
+        message: "Quality model not available for this grain (MVP scope)"
       });
     }
 
-    // -------- 5. Wheat Quality Prediction (Custom Vision - BUFFER) --------
-    const qualityResult = await predictWheatQuality(fileBuffer);
-
-    if (!qualityResult.predictions || qualityResult.predictions.length === 0) {
-      return res.status(400).json({ error: "Unable to detect wheat quality" });
+    if (!qualityResult?.predictions?.length) {
+      return res.status(400).json({
+        error: `Unable to detect ${grainType} quality`
+      });
     }
 
     const qualityPrediction = qualityResult.predictions[0];
     const quality = qualityPrediction.tagName;
     const probability = qualityPrediction.probability;
 
-    // -------- 6. Trust Score --------
+    // -------- 5. Trust Score --------
     const trustScore = calculateTrustScore(quality, probability);
 
-    // -------- 7. Final Response --------
+    // -------- 6. Final Response --------
     res.json({
       imageUrl,
       grainType,
@@ -73,7 +83,7 @@ router.post("/analyze-grain", upload.single("file"), async (req, res) => {
     });
 
   } catch (err) {
-    console.error("Analyze Grain Error:", err.message);
+    console.error("Analyze Grain Error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });

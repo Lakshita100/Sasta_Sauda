@@ -11,3 +11,10 @@ export const wheatQualityConfig = {
   modelName: process.env.WHEAT_QUALITY_MODEL_NAME,
   key: process.env.WHEAT_QUALITY_PREDICTION_KEY
 };
+
+export const riceQualityConfig = {
+  endpoint: process.env.RICE_QUALITY_ENDPOINT,
+  projectId: process.env.RICE_QUALITY_PROJECT_ID,
+  iterationName: process.env.RICE_QUALITY_ITERATION,
+  predictionKey: process.env.RICE_QUALITY_PREDICTION_KEY
+};
