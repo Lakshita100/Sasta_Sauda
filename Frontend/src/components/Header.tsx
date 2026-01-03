@@ -84,19 +84,30 @@ export function Header() {
             </>
           )}
           {userRole && currentUser && (
-            <>
-              <Badge variant="trust" className="hidden sm:flex gap-1.5">
-                <User className="h-3 w-3" />
-                {currentUser.name}
-              </Badge>
-              <Badge variant={userRole === 'seller' ? 'gradeA' : 'default'}>
-                {userRole === 'seller' ? 'Seller' : 'Buyer'}
-              </Badge>
-              <Button variant="ghost" size="icon" onClick={handleLogout}>
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </>
-          )}
+  <>
+    {/* Profile Button */}
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={() => navigate('/profile')}
+      className="flex items-center gap-2"
+    >
+      <User className="h-4 w-4" />
+      <span className="hidden sm:block">{currentUser.name}</span>
+    </Button>
+
+    {/* Role Badge */}
+    <Badge variant={userRole === 'seller' ? 'gradeA' : 'default'}>
+      {userRole === 'seller' ? 'Seller' : 'Buyer'}
+    </Badge>
+
+    {/* Logout */}
+    <Button variant="ghost" size="icon" onClick={handleLogout}>
+      <LogOut className="h-4 w-4" />
+    </Button>
+  </>
+)}
+
         </div>
       </div>
     </header>

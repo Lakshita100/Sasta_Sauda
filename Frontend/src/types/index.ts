@@ -47,17 +47,11 @@ export interface VerificationResult {
 
 export interface Order {
   id: string;
-  listingId: string;
   buyerId: string;
-  grainType: GrainType;
-  quantity: number;
-  pricePerQuintal: number;
+  sellerId: string;
   totalAmount: number;
-  sellerName: string;
-  location: string;
-  qualityGrade: QualityGrade;
-  status: 'pending' | 'confirmed' | 'shipped' | 'delivered';
-  createdAt: Date;
+  status: "completed" | "pending";
+  createdAt: string;
 }
 
 export interface CartItem {

@@ -65,41 +65,55 @@ export function AppProvider({ children }: { children: ReactNode }) {
       .catch((err) => console.error("Listings API error:", err));
   }, []);
 
+  
   /* =========================
-     AUTH PROFILE CHECK
-     ========================= */
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
+   AUTH PROFILE CHECK
+   ========================= */
+useEffect(() => {
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
 
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
 
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/auth/profile",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+    try {
+      const response = await axios.get(
+  "http://localhost:5000/api/auth/me",
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
 
-        const userData = response.data;
-        setCurrentUser(userData);
-        setUserRoleState(userData.role);
-      } catch (error) {
-        console.error("Auth verification failed", error);
-        logout();
-      } finally {
-        setIsLoading(false);
-      }
-    };
+ console.log("PROFILE API RESPONSE:", response.data); // 👈 ADD
 
-    fetchUser();
-  }, []);
+      const user = response.data.user; // 👈 MUST MATCH BACKEND
+
+      console.log("USER OBJECT:", user); // 👈 ADD
+
+setCurrentUser({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+});
+
+setUserRoleState(user.role);
+
+    } catch (error) {
+      console.error("Auth verification failed", error);
+      logout();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchUser();
+}, []);
+
 
   /* =========================
      AUTH ACTIONS

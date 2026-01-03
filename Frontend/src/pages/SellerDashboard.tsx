@@ -12,6 +12,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { Header } from "@/components/Header";
+
+
 
 export default function SellerDashboard() {
   const [image, setImage] = useState<File | null>(null);
@@ -79,7 +82,12 @@ export default function SellerDashboard() {
     }
   };
 
-  return (
+ return (
+  <>
+    {/* Navbar */}
+    <Header />
+
+    {/* Page Content */}
     <div className="max-w-3xl mx-auto py-6">
       <Card>
         <CardHeader>
@@ -167,5 +175,6 @@ export default function SellerDashboard() {
         </CardContent>
       </Card>
     </div>
-  );
+  </>
+);
 }

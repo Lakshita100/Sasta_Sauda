@@ -75,14 +75,17 @@ export default function Marketplace() {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8 space-y-6">
+      <main className="container mx-auto py-8 space-y-6 ">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 rounded-xl border bg-card p-6 shadow-sm">
+
           <div>
-            <h1 className="font-serif text-3xl font-bold">Grain Marketplace</h1>
-            <p className="text-muted-foreground mt-1">
-              {filteredListings.length} AI-verified listings available
-            </p>
+          <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight">
+ Buy Grains From Verified Sellers
+</h1>
+<p className="text-muted-foreground mt-2">
+  {filteredListings.length} AI-verified grain listings
+</p>
           </div>
           
           <div className="flex items-center gap-2">
