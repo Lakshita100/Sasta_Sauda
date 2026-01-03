@@ -55,15 +55,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   /* =========================
      FETCH REAL LISTINGS
      ========================= */
-  useEffect(() => {
-    fetch("http://localhost:5000/api/listings")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Listings from API:", data);
+useEffect(() => {
+  if (userRole === "buyer") {
+    fetch("http://localhost:5000/api/listings/verified")
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ VERIFIED LISTINGS:", data);
         setListings(data);
       })
-      .catch((err) => console.error("Listings API error:", err));
-  }, []);
+      .catch(err => console.error("❌ Buyer listings error:", err));
+  }
+}, [userRole]);
+
 
   
   /* =========================

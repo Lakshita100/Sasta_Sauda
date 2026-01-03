@@ -1,7 +1,6 @@
 import express from "express";
 import upload from "../middleware/upload.js";
-
-import { uploadToBlob } from "../services/blob.service.js";
+import { uploadToAzure } from "../services/blob.service.js";
 import { runVisionCheck } from "../services/vision.service.js";
 
 import {
@@ -25,7 +24,7 @@ router.post("/analyze-grain", upload.single("file"), async (req, res) => {
     const fileName = `${Date.now()}_${req.file.originalname}`;
 
     // -------- 1. Upload to Azure Blob (storage only) --------
-    const imageUrl = await uploadToBlob(fileBuffer, fileName);
+    const imageUrl = await uploadToAzure(fileBuffer, fileName);
 
     // -------- 2. Azure Vision blur check (URL-based) --------
     const isBlurred = await runVisionCheck(imageUrl);
