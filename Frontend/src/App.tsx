@@ -1,3 +1,4 @@
+import SellerSellTrack from "./pages/SellerSellTrack";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -154,6 +155,16 @@ function AppRoutes() {
               </ProtectedRoute>
             } 
           />
+
+          <Route
+            path="/seller/sell-track"
+            element={
+            <ProtectedRoute allowedRole="seller">
+            <SellerSellTrack />
+            </ProtectedRoute>
+         }
+          />
+
 
           {/* BUYER ONLY ROUTES */}
           <Route 

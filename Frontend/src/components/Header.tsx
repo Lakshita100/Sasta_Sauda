@@ -66,14 +66,25 @@ export function Header() {
 
         {/* SELLER */}
         {userRole === "seller" && (
-          <Button
-            variant={isActive("/seller") ? "secondary" : "ghost"}
-            size="sm"
-            onClick={() => navigate("/seller")}
-          >
-            Sell Grain
-          </Button>
-        )}
+  <>
+    <Button
+      variant={isActive("/seller") ? "secondary" : "ghost"}
+      size="sm"
+      onClick={() => navigate("/seller")}
+    >
+      Sell Grain
+    </Button>
+
+    <Button
+      variant={isActive("/seller/sell-track") ? "secondary" : "ghost"}
+      size="sm"
+      onClick={() => navigate("/seller/sell-track")}
+    >
+      Sell Track
+    </Button>
+  </>
+)}
+
 
       
           {/* BUYER / MARKETPLACE */}

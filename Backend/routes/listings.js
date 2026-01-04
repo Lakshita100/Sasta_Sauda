@@ -96,4 +96,27 @@ router.get("/verified", async (req, res) => {
   }
 });
 
+// ===============================
+// SELLER - MY LISTINGS (SELL TRACK)
+// ===============================
+router.get("/my", authMiddleware, async (req, res) => {
+  try {
+    console.log("REQ.USER:", req.user);
+
+    const sellerId = req.user.id || req.user._id || req.user.userId;
+
+    if (!sellerId) {
+      return res.status(400).json({ message: "Seller ID missing in token" });
+    }
+
+    const listings = await Listing.find({ sellerId });
+
+    res.json(listings);
+  } catch (err) {
+    console.error("SELL TRACK ERROR:", err);
+    res.status(500).json({ message: "Failed to fetch seller listings" });
+  }
+});
+
+
 export default router;
