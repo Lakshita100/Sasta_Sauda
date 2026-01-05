@@ -33,12 +33,19 @@ export function Header() {
         {/* <Wheat className="h-5 w-5 text-primary-foreground" /> */}
       </div>
       <div>
-        <h1 className="font-serif text-xl font-bold text-foreground">
+        <div className="flex items-center justify-center">
+  <img
+    src="logo.png"
+    alt="SastaSauda Logo"
+    className="h-20 w-auto object-contain"
+  />
+</div>
+        {/* <h1 className="font-serif text-xl font-bold text-foreground">
           SastaSauda
         </h1>
         <p className="text-xs text-muted-foreground">
           Jaha Sasta Waha Sauda
-        </p>
+        </p> */}
       </div>
     </div>
 
