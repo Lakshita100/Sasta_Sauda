@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Header } from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,47 +8,92 @@ import { Button } from "@/components/ui/button";
 export default function SellerSellTrack() {
   const [listings, setListings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const fetchMyListings = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        "http://localhost:5000/api/listings/my",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setListings(res.data);
+    } catch (err) {
+      console.error("❌ Sell Track Error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* ===============================
+     AUTO REFRESH (POLLING)
+  =============================== */
   useEffect(() => {
-    const fetchMyListings = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        if (!token) return;
-
-        const res = await axios.get(
-          "http://localhost:5000/api/listings/my",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setListings(res.data);
-      } catch (err) {
-        console.error("❌ Sell Track Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Initial load
     fetchMyListings();
 
-    // 🔁 AUTO REFRESH every 5 seconds (AI status update)
-    const interval = setInterval(fetchMyListings, 5000);
+    intervalRef.current = setInterval(() => {
+      fetchMyListings();
+    }, 5000); // ⏱ every 5 sec
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
+
+  /* ===============================
+     RE-UPLOAD HANDLER
+  =============================== */
+  const handleReupload = async (
+    listingId: string,
+    file: File | null
+  ) => {
+    if (!file) return;
+
+    try {
+      setUploadingId(listingId);
+      const token = localStorage.getItem("token");
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      await axios.put(
+        `http://localhost:5000/api/listings/reupload/${listingId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      await fetchMyListings();
+    } catch (err) {
+      console.error("❌ Reupload failed:", err);
+    } finally {
+      setUploadingId(null);
+    }
+  };
 
   return (
     <>
-      {/* NAVBAR */}
       <Header />
 
       <main className="container mx-auto py-8 space-y-6">
-        <h1 className="text-3xl font-bold">My Sell Track</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold">My Sell Track</h1>
+          <p className="text-sm text-muted-foreground">
+            🔄 Auto-refreshing every 5 seconds
+          </p>
+        </div>
 
         {loading ? (
           <p>Loading...</p>
@@ -60,7 +105,6 @@ export default function SellerSellTrack() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {listings.map((item) => (
               <Card key={item._id} className="overflow-hidden">
-                {/* IMAGE */}
                 {item.imageUrl && (
                   <img
                     src={item.imageUrl}
@@ -70,7 +114,6 @@ export default function SellerSellTrack() {
                 )}
 
                 <CardContent className="p-4 space-y-3">
-                  {/* TITLE + STATUS */}
                   <div className="flex justify-between items-center">
                     <h2 className="font-semibold text-lg capitalize">
                       {item.grainType}
@@ -110,14 +153,15 @@ export default function SellerSellTrack() {
 
                   {item.status === "PENDING" && (
                     <p className="text-yellow-600 text-sm font-medium animate-pulse">
-                      ⏳ AI verification in progress
+                      ⏳ AI verification in progress…
                     </p>
                   )}
 
-                  {item.status === "REJECTED" && (
+                  {(item.status === "REJECTED" ||
+                    item.status === "REUPLOAD_REQUIRED") && (
                     <div className="space-y-2">
                       <p className="text-red-600 text-sm font-medium">
-                        ❌ Rejected by AI
+                        ❌ Action Required
                       </p>
 
                       {item.rejectionReason && (
@@ -126,19 +170,30 @@ export default function SellerSellTrack() {
                         </p>
                       )}
 
-                      {/* FUTURE ACTIONS */}
-                      <div className="flex gap-2">
-                        <Button size="sm">
-                          Re-upload Image
-                        </Button>
-                        <Button size="sm" variant="outline">
-                          Request Inspection
-                        </Button>
-                      </div>
+                      <label className="block text-sm font-medium">
+                        Re-upload Image
+                      </label>
+
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) =>
+                          handleReupload(
+                            item._id,
+                            e.target.files?.[0] || null
+                          )
+                        }
+                        disabled={uploadingId === item._id}
+                      />
+
+                      {uploadingId === item._id && (
+                        <p className="text-xs text-muted-foreground">
+                          Uploading & re-verifying…
+                        </p>
+                      )}
                     </div>
                   )}
 
-                  {/* AI EXPLANATION */}
                   {item.qualityExplanation && (
                     <p className="text-xs text-muted-foreground">
                       {item.qualityExplanation}
