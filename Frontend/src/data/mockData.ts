@@ -1,5 +1,8 @@
 import { GrainListing, MarketPrice, GrainType, QualityGrade } from '@/types';
 
+/* =========================
+   GRAIN TYPES (UNCHANGED)
+========================= */
 export const GRAIN_TYPES: { value: GrainType; label: string }[] = [
   { value: 'wheat', label: 'Wheat' },
   { value: 'rice', label: 'Rice' },
@@ -9,15 +12,70 @@ export const GRAIN_TYPES: { value: GrainType; label: string }[] = [
   { value: 'millet', label: 'Millet' },
 ];
 
+/* =========================
+   UPDATED MARKET PRICES
+   (MATCHES LIVE API)
+========================= */
 export const MARKET_PRICES: MarketPrice[] = [
-  { grainType: 'wheat', minPrice: 2100, avgPrice: 2350, maxPrice: 2600, unit: '₹/quintal' },
-  { grainType: 'rice', minPrice: 2800, avgPrice: 3100, maxPrice: 3400, unit: '₹/quintal' },
-  { grainType: 'corn', minPrice: 1800, avgPrice: 2050, maxPrice: 2300, unit: '₹/quintal' },
-  { grainType: 'barley', minPrice: 1600, avgPrice: 1850, maxPrice: 2100, unit: '₹/quintal' },
-  { grainType: 'soybean', minPrice: 4200, avgPrice: 4600, maxPrice: 5000, unit: '₹/quintal' },
-  { grainType: 'millet', minPrice: 2200, avgPrice: 2450, maxPrice: 2700, unit: '₹/quintal' },
+  {
+    grainType: 'Potato',
+    mandi: 'Patiala APMC',
+    state: 'Punjab',
+    minPrice: 500,
+    modalPrice: 600,
+    maxPrice: 700,
+    date: '05/01/2026',
+  },
+  {
+    grainType: 'Papaya',
+    mandi: 'PMY Bilaspur',
+    state: 'Himachal Pradesh',
+    minPrice: 3500,
+    modalPrice: 3800,
+    maxPrice: 4000,
+    date: '05/01/2026',
+  },
+  {
+    grainType: 'Pumpkin',
+    mandi: 'Haibargaon APMC',
+    state: 'Assam',
+    minPrice: 1200,
+    modalPrice: 1350,
+    maxPrice: 1450,
+    date: '05/01/2026',
+  },
+  {
+    grainType: 'Wheat',
+    mandi: 'Indore APMC',
+    state: 'Madhya Pradesh',
+    minPrice: 2200,
+    modalPrice: 2350,
+    maxPrice: 2500,
+    date: '05/01/2026',
+  },
+  {
+    grainType: 'Rice',
+    mandi: 'Karnal APMC',
+    state: 'Haryana',
+    minPrice: 2900,
+    modalPrice: 3150,
+    maxPrice: 3400,
+    date: '05/01/2026',
+  },
+  {
+    grainType: 'Maize',
+    mandi: 'Nizamabad APMC',
+    state: 'Telangana',
+    minPrice: 1800,
+    modalPrice: 2050,
+    maxPrice: 2250,
+    date: '05/01/2026',
+  },
 ];
 
+/* =========================
+   MOCK LISTINGS (UNCHANGED)
+========================= */
 export const MOCK_LISTINGS: GrainListing[] = [
   {
     id: '1',
@@ -117,6 +175,9 @@ export const MOCK_LISTINGS: GrainListing[] = [
   },
 ];
 
+/* =========================
+   HELPERS (UNCHANGED)
+========================= */
 export const LOCATIONS = [
   'Punjab, India',
   'Haryana, India',

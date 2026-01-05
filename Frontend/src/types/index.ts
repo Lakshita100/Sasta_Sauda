@@ -22,11 +22,14 @@ export interface GrainListing {
 }
 
 export interface MarketPrice {
-  grainType: GrainType;
+  grainType: string;
+  mandi: string;
+  state: string;
+  district?: string;
   minPrice: number;
-  avgPrice: number;
   maxPrice: number;
-  unit: string;
+  modalPrice: number;
+  date?: string;
 }
 
 export interface Feedback {
@@ -59,3 +62,4 @@ export interface CartItem {
   quantity: number;
   listing: GrainListing;
 }
+

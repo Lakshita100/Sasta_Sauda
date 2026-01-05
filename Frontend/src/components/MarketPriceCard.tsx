@@ -1,56 +1,74 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { MarketPrice, GrainType } from '@/types';
-import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
+import { MarketPrice } from "@/types";
+import { TrendingUp, Minus } from "lucide-react";
 
-interface MarketPriceCardProps {
+interface Props {
   price: MarketPrice;
-  isHighlighted?: boolean;
 }
 
-const grainEmojis: Record<GrainType, string> = {
-  wheat: '🌾',
-  rice: '🍚',
-  corn: '🌽',
-  barley: '🌿',
-  soybean: '🫘',
-  millet: '🌱',
+const emojiMap: Record<string, string> = {
+  potato: "🥔",
+  papaya: "🍈",
+  pumpkin: "🎃",
+  tomato: "🍅",
+  banana: "🍌",
+  onion: "🧅",
+  wheat: "🌾",
+  rice: "🍚",
+  maize: "🌽",
 };
 
-export function MarketPriceCard({ price, isHighlighted = false }: MarketPriceCardProps) {
-  const avgTrend = price.avgPrice > price.minPrice + (price.maxPrice - price.minPrice) / 2;
-  
+export function MarketPriceCard({ price }: Props) {
+  const formatPrice = (value?: number) =>
+    Number.isFinite(value) ? value.toLocaleString() : "N/A";
+
+  const trend =
+    price.modalPrice >
+    price.minPrice + (price.maxPrice - price.minPrice) / 2;
+
+  const emoji =
+    emojiMap[price.grainType.toLowerCase()] ?? "🌱";
+
   return (
-    <Card className={`overflow-hidden transition-all duration-300 hover:shadow-soft-lg ${isHighlighted ? 'ring-2 ring-primary' : ''}`}>
-      <CardContent className="p-0">
-        <div className="bg-secondary/50 px-4 py-3 flex items-center gap-2">
-          <span className="text-2xl">{grainEmojis[price.grainType]}</span>
-          <h3 className="font-serif font-semibold capitalize text-lg">{price.grainType}</h3>
+    <Card className="border-green-200 hover:shadow-lg transition">
+      <CardContent className="p-4 space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">{emoji}</span>
+          <h3 className="font-semibold text-lg">
+            {price.grainType}
+          </h3>
         </div>
-        
-        <div className="p-4 space-y-3">
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">Min</p>
-              <p className="font-semibold text-muted-foreground">₹{price.minPrice.toLocaleString()}</p>
-            </div>
-            <div className="space-y-1 bg-primary/10 rounded-lg py-2 -my-1">
-              <p className="text-xs text-primary uppercase tracking-wide font-medium">Avg</p>
-              <p className="font-bold text-primary text-lg">₹{price.avgPrice.toLocaleString()}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">Max</p>
-              <p className="font-semibold text-muted-foreground">₹{price.maxPrice.toLocaleString()}</p>
-            </div>
+
+        <p className="text-sm text-muted-foreground">
+          {price.mandi}, {price.state}
+        </p>
+
+        <div className="grid grid-cols-3 text-center text-sm gap-2">
+          <div>
+            <p className="text-xs text-muted-foreground">Min</p>
+            <p>₹{formatPrice(price.minPrice)}</p>
           </div>
-          
-          <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground pt-2 border-t">
-            {avgTrend ? (
-              <TrendingUp className="h-3 w-3 text-grade-a" />
-            ) : (
-              <Minus className="h-3 w-3" />
-            )}
-            <span>per quintal</span>
+
+          <div className="bg-green-50 rounded">
+            <p className="text-xs text-green-700 font-medium">Modal</p>
+            <p className="font-bold text-green-800">
+              ₹{formatPrice(price.modalPrice)}
+            </p>
           </div>
+
+          <div>
+            <p className="text-xs text-muted-foreground">Max</p>
+            <p>₹{formatPrice(price.maxPrice)}</p>
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center gap-1 text-xs text-muted-foreground pt-2 border-t">
+          {trend ? (
+            <TrendingUp className="h-3 w-3 text-green-600" />
+          ) : (
+            <Minus className="h-3 w-3" />
+          )}
+          <span>per quintal</span>
         </div>
       </CardContent>
     </Card>

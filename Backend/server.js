@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.js';
 import connectDB from './config/db.js';
 import listingsRoutes from "./routes/listings.js";
 import analyzeRoutes from "./routes/analyze.routes.js";
+import marketPricesRoutes from "./routes/marketPrices.js"
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use("/api/listings", listingsRoutes);
 app.use("/api", analyzeRoutes);
+app.use("/api/market-prices", marketPricesRoutes);
 
 
 // Health Check
