@@ -121,9 +121,37 @@ setUserRoleState(user.role);
   /* =========================
      AUTH ACTIONS
      ========================= */
-  const setUserRole = (role: UserRole) => {
+  const setUserRole = async (role: UserRole) => {
     setUserRoleState(role);
-    if (!role) logout();
+    if (!role) {
+      logout();
+      return;
+    }
+
+    // Fetch user profile immediately after setting role
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/auth/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const user = response.data.user;
+        setCurrentUser({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        });
+      } catch (error) {
+        console.error("Failed to fetch user profile", error);
+      }
+    }
   };
 
   const logout = () => {
