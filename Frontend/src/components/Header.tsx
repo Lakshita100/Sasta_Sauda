@@ -35,7 +35,7 @@ export function Header() {
       <div>
         <div className="flex items-center justify-center">
   <img
-    src="logo.png"
+    src="/logo.png"
     alt="SastaSauda Logo"
     className="h-20 w-auto object-contain"
   />
