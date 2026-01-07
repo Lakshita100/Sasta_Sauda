@@ -20,11 +20,9 @@ export default function SellerDashboard() {
   const [image, setImage] = useState<File | null>(null);
 
   const [form, setForm] = useState({
-    grainType: "",
     location: "",
     quantity: "",
     pricePerQuintal: "",
-    qualityGrade: "A",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,11 +44,9 @@ export default function SellerDashboard() {
       }
 
       const formData = new FormData();
-      formData.append("grainType", form.grainType);
       formData.append("location", form.location);
       formData.append("quantity", form.quantity);
       formData.append("pricePerQuintal", form.pricePerQuintal);
-      formData.append("qualityGrade", form.qualityGrade);
       formData.append("image", image);
 
       await axios.post(
@@ -68,11 +64,9 @@ export default function SellerDashboard() {
 
       // reset form
       setForm({
-        grainType: "",
         location: "",
         quantity: "",
         pricePerQuintal: "",
-        qualityGrade: "A",
       });
       setImage(null);
 
@@ -104,18 +98,6 @@ return (
 
         <CardContent className="space-y-5 pt-4">
           
-          {/* Grain Type */}
-          <div className="space-y-1">
-            <Label className="text-sm font-medium">Grain Type</Label>
-            <Input
-              name="grainType"
-              value={form.grainType}
-              onChange={handleChange}
-              placeholder="Rice / Wheat / Dal"
-              className="focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-
           {/* Location */}
           <div className="space-y-1">
             <Label className="text-sm font-medium">Location</Label>
@@ -155,26 +137,6 @@ return (
                 className="focus:ring-2 focus:ring-green-400"
               />
             </div>
-          </div>
-
-          {/* Quality Grade */}
-          <div className="space-y-1">
-            <Label className="text-sm font-medium">Quality Grade</Label>
-            <Select
-              value={form.qualityGrade}
-              onValueChange={(value) =>
-                setForm({ ...form, qualityGrade: value })
-              }
-            >
-              <SelectTrigger className="focus:ring-2 focus:ring-green-400">
-                <SelectValue placeholder="Select grade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="A">Grade A (Best)</SelectItem>
-                <SelectItem value="B">Grade B</SelectItem>
-                <SelectItem value="C">Grade C</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           {/* Image Upload */}

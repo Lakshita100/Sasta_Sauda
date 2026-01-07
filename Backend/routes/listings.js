@@ -68,6 +68,7 @@ async function runAIVerification(listing, imageBuffer) {
   // ✅ Verified
   else {
     listing.status = "VERIFIED";
+    listing.grainType = predictedGrain;
     listing.predictedGrain = predictedGrain;
     listing.qualityGrade = best.tagName;
     listing.confidenceScore = Math.round(confidence * 100);
@@ -99,7 +100,6 @@ router.post(
       // Create listing (PENDING initially)
       const listing = await Listing.create({
         sellerId: req.user.id,
-        grainType: req.body.grainType,
         location: req.body.location,
         quantity: req.body.quantity,
         pricePerQuintal: req.body.pricePerQuintal,

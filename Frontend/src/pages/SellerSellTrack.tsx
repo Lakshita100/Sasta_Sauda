@@ -116,7 +116,7 @@ export default function SellerSellTrack() {
                 <CardContent className="p-4 space-y-3">
                   <div className="flex justify-between items-center">
                     <h2 className="font-semibold text-lg capitalize">
-                      {item.grainType}
+                      {item.predictedGrain || item.grainType || "Pending AI verification"}
                     </h2>
 
                     <Badge
