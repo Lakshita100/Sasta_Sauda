@@ -43,7 +43,7 @@ export default function Home() {
         </div>
 
         <img
-          src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854"
+          src="heroimg.png"
           alt="Farmer"
           className="rounded-2xl shadow-lg"
         />
